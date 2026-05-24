@@ -9,20 +9,20 @@ no cloud APIs required.
 
 ```
 ┌──────────────┐    ┌──────────────────────────┐    ┌─────────────┐
-│  PyPDFLoader │───▶│ RecursiveCharacterText   │───▶│  nomic-embed│
-│  (Extract)   │    │ Splitter     (Chunking)   │    │  -text      │
+│  PyPDFLoader │───>│ RecursiveCharacterText   │───>│  nomic-embed│
+│  (Extract)   │    │ Splitter    (Chunking)   │    │  -text      │
 └──────────────┘    └──────────────────────────┘    └──────┬──────┘
-                                                          │
-                                                          ▼
+                                                           │
+                                                           ▼
 ┌──────────────┐    ┌──────────────────────────┐    ┌─────────────┐
-│   Llama 3    │◀───│  RAG Chain               │◀───│  ChromaDB   │
+│   Llama 3    │<───│  RAG Chain               │<───│  ChromaDB   │
 │  (Generate)  │    │  (Prompt + Retrieval)    │    │  (Search)   │
 └──────────────┘    └──────────────────────────┘    └─────────────┘
 ```
 
 ## Prerequisites
 
-- **Python 3.10+** (check with `python --version`)
+- **Python 3.10+**
 - **Ollama** — local LLM runtime
 
 ## Setup Instructions
@@ -57,13 +57,7 @@ ollama list
 
 You should see both `llama3` and `nomic-embed-text` in the list.
 
-### 3. Clone / Set Up the Project
-
-```bash
-cd mi_technologies_hw
-```
-
-### 4. Create a Python Virtual Environment (Recommended)
+### 3. Create a Python Virtual Environment (Recommended)
 
 ```bash
 python -m venv venv
@@ -75,13 +69,13 @@ venv\Scripts\activate
 # source venv/bin/activate
 ```
 
-### 5. Install Python Dependencies
+### 4. Install Python Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 6. Configure the Environment
+### 5. Configure the Environment
 
 Copy the example environment file and edit it to match your setup:
 
@@ -179,40 +173,12 @@ Once started, the assistant displays its configuration and waits for your questi
 | `CHUNK_OVERLAP`      | `200`                    | Overlapping characters per chunk   |
 | `CHROMA_PERSIST_DIR` | `./chroma_db`            | ChromaDB persistence directory     |
 
-## Troubleshooting
-
-| Symptom                                   | Solution                                         |
-|-------------------------------------------|--------------------------------------------------|
-| `ConnectionError` or `httpx.ConnectError` | Make sure Ollama is running (`ollama serve`)     |
-| Model not found                           | Run `ollama pull <model>` to download models     |
-| PDF file not found                        | Check `PDF_PATH` in `.env` or pass via CLI       |
-| Empty or poor quality answers             | Try different `CHUNK_SIZE` values (e.g. 500)      |
-| Slow responses                            | First run downloads models; subsequent runs faster|
-| Import errors after `pip install`         | Ensure virtual environment is activated          |
-
-## Project Structure
-
-```
-mi_technologies_hw/
-├── knowledge_assistant.py   # Entry point — orchestrates the RAG pipeline
-├── config.py                # Configuration loader (.env + CLI args)
-├── pdf_loader.py            # PDF loading & chunking (PyPDFLoader + splitter)
-├── vector_store.py          # ChromaDB operations (create / load / search)
-├── rag_chain.py             # RAG chain assembly (retriever → prompt → LLM)
-├── requirements.txt         # Python dependencies
-├── .env.example             # Environment configuration template
-├── .env                     # Your local configuration (create from .env.example)
-├── README.md                # This file
-├── chroma_db/               # ChromaDB vector store (auto-generated)
-└── venv/                    # Python virtual environment (created by you)
-```
-
 ### Module Overview
 
-| Module                 | Responsibility                                                    |
-|------------------------|-------------------------------------------------------------------|
-| `knowledge_assistant.py` | Entry point: loads config, wires modules, runs interactive Q&A  |
-| `config.py`            | Reads `.env` file and CLI arguments, provides `AppConfig`         |
-| `pdf_loader.py`        | Loads PDF via `PyPDFLoader`, splits with `RecursiveCharacterTextSplitter` |
-| `vector_store.py`      | Creates/loads `ChromaDB` vector store with Ollama embeddings      |
-| `rag_chain.py`         | Builds the LangChain RAG chain (retriever + prompt + LLM)         |
+| Module                      | Responsibility                                                    |
+|-----------------------------|-------------------------------------------------------------------|
+| `knowledge_assistant.py`    | Entry point: loads config, wires modules, runs interactive Q&A  |
+| `src/config.py`             | Reads `.env` file and CLI arguments, provides `AppConfig`         |
+| `src/pdf_loader.py`         | Loads PDF via `PyPDFLoader`, splits with `RecursiveCharacterTextSplitter` |
+| `src/vector_store.py`       | Creates/loads `ChromaDB` vector store with Ollama embeddings      |
+| `src/rag_chain.py`          | Builds the LangChain RAG chain (retriever + prompt + LLM)         |

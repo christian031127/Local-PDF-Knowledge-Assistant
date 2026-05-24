@@ -11,10 +11,10 @@ Usage:
     python knowledge_assistant.py [pdf_path] [--rebuild]
 """
 
-from config import load_config
-from pdf_loader import load_and_chunk_pdf
-from rag_chain import build_rag_chain
-from vector_store import get_or_create_vectorstore
+from src.config import load_config
+from src.pdf_loader import load_and_chunk_pdf
+from src.rag_chain import build_rag_chain
+from src.vector_store import get_or_create_vectorstore
 
 
 def _print_banner(config) -> None:
@@ -84,12 +84,12 @@ def main() -> None:
     config = load_config()
     _print_banner(config)
 
-    # Step 1 & 2: PDF → Chunks
+    # Step 1 & 2: PDF -> Chunks
     chunks = load_and_chunk_pdf(
         config.pdf_path, config.chunk_size, config.chunk_overlap
     )
 
-    # Step 3 & 4: Embedding → Vector Store
+    # Step 3 & 4: Embedding -> Vector Store
     vectorstore = get_or_create_vectorstore(
         chunks=chunks,
         embedding_model=config.embedding_model,
