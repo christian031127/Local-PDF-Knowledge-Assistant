@@ -1,0 +1,4 @@
+ai_hw_env/
+__pycache__/
+.chroma/
+*.pdf
