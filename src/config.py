@@ -72,9 +72,7 @@ def load_config() -> AppConfig:
 
     return AppConfig(
         pdf_path=args.pdf_path or os.getenv("PDF_PATH", "./document.pdf"),
-        ollama_base_url=os.getenv(
-            "OLLAMA_BASE_URL", "http://localhost:11434"
-        ),
+        ollama_base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
         ollama_model=os.getenv("OLLAMA_MODEL", "llama3"),
         embedding_model=os.getenv("EMBEDDING_MODEL", "nomic-embed-text"),
         chunk_size=int(os.getenv("CHUNK_SIZE", "1000")),

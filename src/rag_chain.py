@@ -28,7 +28,7 @@ def build_rag_chain(
     llm_model: str,
     base_url: str,
 ) -> RunnablePassthrough:
-    """Build the RAG chain: retriever → prompt → LLM → output parser.
+    """Build the RAG chain: retriever -> prompt -> LLM -> output parser.
 
     The chain retrieves relevant document chunks from ChromaDB,
     injects them into the system prompt as context, and generates
@@ -64,10 +64,12 @@ def build_rag_chain(
         "Context:\n{context}"
     )
 
-    prompt = ChatPromptTemplate.from_messages([
-        ("system", system_prompt),
-        ("human", "{question}"),
-    ])
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", system_prompt),
+            ("human", "{question}"),
+        ]
+    )
 
     rag_chain = (
         {

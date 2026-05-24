@@ -5,7 +5,7 @@ Local PDF Knowledge Assistant
 Terminal-based Knowledge Base Assistant that answers questions from a PDF
 document using a local RAG pipeline (Ollama + LangChain + ChromaDB).
 
-Pipeline: PyPDFLoader → RecursiveCharacterTextSplitter → ChromaDB → Llama 3
+Pipeline: PyPDFLoader -> RecursiveCharacterTextSplitter -> ChromaDB -> Llama 3
 
 Usage:
     python knowledge_assistant.py [pdf_path] [--rebuild]

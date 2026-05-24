@@ -1,4 +1,5 @@
-ai_hw_env/
+.venv/
 __pycache__/
-.chroma/
+chroma_db/
 *.pdf
+.env

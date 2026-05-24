@@ -7,7 +7,7 @@ split it into overlapping text chunks using RecursiveCharacterTextSplitter.
 import sys
 from pathlib import Path
 
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader
 
 
